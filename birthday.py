@@ -1,19 +1,24 @@
 import streamlit as st
 import random
 import time
+import json
 from streamlit_extras.let_it_rain import rain
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 from datetime import datetime, timedelta
 
 
+token_json_secret = st.secrets["token"]
+tokensecret = json.loads(token_json_secret)
+
 # Google Drive API einrichten
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 folder_id = '1HEC4cAZ6G70v26llUIskK9I5w11paLRv'
 
 def load_credentials():
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+    creds = Credentials.from_authorized_user_info(tokensecret, SCOPES)
     return creds
+
 
 #Definitionen für Die Rezepte
 def list_text_files(service, folder_id):
@@ -165,6 +170,7 @@ st.write("")
 
 if folder_id:
     creds = load_credentials()
+    print(creds)
     service = build("drive", "v3", credentials=creds)
 
     files = list_text_files(service, folder_id)
@@ -178,4 +184,5 @@ if folder_id:
             st.text_area("Dateiinhalt:", content, height=300)
     else:
         st.write("Keine Textdateien im angegebenen Ordner gefunden.")
+
 
