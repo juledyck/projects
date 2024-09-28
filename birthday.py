@@ -121,17 +121,17 @@ with col1:
 with col2:    
     # Liste der Events
     events = {
-        "zu Karens Geburtstag": datetime(2024, 9, 29),
-        "zu Hans-Karls Geburtstag": datetime(2024, 10, 1),
-        "zum kirchlichen Hochzeitstag und Jules Tauftag": datetime(2024, 10, 9),
-        "zum standesamtlichen Hochzeitstag": datetime(2024, 10, 10),
-        "zu Arnes Geburtstag": datetime(2024, 11, 11), 
-        "zu Jules Geburtstag": datetime(2024, 11, 19),
-        "zu Gerti Geburtstag": datetime(2024, 12, 11),
-        "zu Weihnachten": datetime(2024, 12, 24),
-        "zu Friederikes Geburtstag": datetime(2024, 12, 28),
-        "zu Wolfgangs Geburtstag": datetime(2025, 7, 30),  
-        "zu Kallis Geburtstag": datetime(2025, 9, 3),  
+        "zu Karens Geburtstag": datetime(2024, 9, 29, 0 ,0),
+        "zu Hans-Karls Geburtstag": datetime(2024, 10, 1, 0, 0),
+        "zum kirchlichen Hochzeitstag und Jules Tauftag": datetime(2024, 10, 9, 0, 0),
+        "zum standesamtlichen Hochzeitstag": datetime(2024, 10, 10, 0, 0),
+        "zu Arnes Geburtstag": datetime(2024, 11, 11, 0, 0), 
+        "zu Jules Geburtstag": datetime(2024, 11, 19, 0, 0),
+        "zu Gerti Geburtstag": datetime(2024, 12, 11, 0, 0),
+        "zu Weihnachten": datetime(2024, 12, 24, 0, 0),
+        "zu Friederikes Geburtstag": datetime(2024, 12, 28, 0, 0),
+        "zu Wolfgangs Geburtstag": datetime(2025, 7, 30, 0, 0),  
+        "zu Kallis Geburtstag": datetime(2025, 9, 3, 0, 0),  
     }
 
     now = datetime.now()
