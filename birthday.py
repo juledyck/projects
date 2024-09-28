@@ -2,11 +2,13 @@ import streamlit as st
 import random
 import time
 import json
+import pytz
 from streamlit_extras.let_it_rain import rain
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 from datetime import datetime, timedelta
 
+german_timezone = pytz.timezone('Europe/Berlin')
 
 token_json_secret = st.secrets["token"]
 tokensecret = json.loads(token_json_secret)
@@ -119,22 +121,25 @@ with col1:
 
 #Countdown
 with col2:    
+
+    # Aktuelle Zeit in deutscher Zeit
+    now = datetime.now(german_timezone)
+    
     # Liste der Events
     events = {
-        "zu Karens Geburtstag": datetime(2024, 9, 29, 0 ,0),
-        "zu Hans-Karls Geburtstag": datetime(2024, 10, 1, 0, 0),
-        "zum kirchlichen Hochzeitstag und Jules Tauftag": datetime(2024, 10, 9, 0, 0),
-        "zum standesamtlichen Hochzeitstag": datetime(2024, 10, 10, 0, 0),
-        "zu Arnes Geburtstag": datetime(2024, 11, 11, 0, 0), 
-        "zu Jules Geburtstag": datetime(2024, 11, 19, 0, 0),
-        "zu Gerti Geburtstag": datetime(2024, 12, 11, 0, 0),
-        "zu Weihnachten": datetime(2024, 12, 24, 0, 0),
-        "zu Friederikes Geburtstag": datetime(2024, 12, 28, 0, 0),
-        "zu Wolfgangs Geburtstag": datetime(2025, 7, 30, 0, 0),  
-        "zu Kallis Geburtstag": datetime(2025, 9, 3, 0, 0),  
-    }
+        "zu Karens Geburtstag": german_timezone.localize(datetime(2024, 9, 29, 0, 0)),
+        "zu Hans-Karls Geburtstag": german_timezone.localize(datetime(2024, 10, 1, 0, 0)),
+        "zum kirchlichen Hochzeitstag und Jules Tauftag": german_timezone.localize(datetime(2024, 10, 9, 0, 0)),
+        "zum standesamtlichen Hochzeitstag": german_timezone.localize(datetime(2024, 10, 10, 0, 0)),
+        "zu Arnes Geburtstag": german_timezone.localize(datetime(2024, 11, 11, 0, 0)),
+        "zu Jules Geburtstag": german_timezone.localize(datetime(2024, 11, 19, 0, 0)),
+        "zu Gerti Geburtstag": german_timezone.localize(datetime(2024, 12, 11, 0, 0)),
+        "zu Weihnachten": german_timezone.localize(datetime(2024, 12, 24, 0, 0)),
+        "zu Friederikes Geburtstag": german_timezone.localize(datetime(2024, 12, 28, 0, 0)),
+        "zu Wolfgangs Geburtstag": german_timezone.localize(datetime(2025, 7, 30, 0, 0)),
+        "zu Kallis Geburtstag": german_timezone.localize(datetime(2025, 9, 3, 0, 0)),
+}
 
-    now = datetime.now()
 
     next_event = None
     next_event_name = ""
@@ -165,7 +170,7 @@ with col2:
     if next_event:
         time_remaining = next_event - now
         days, seconds = time_remaining.days, time_remaining.seconds
-        hours = (seconds // 3600) - 2
+        hours = (seconds // 3600)
         minutes = (seconds % 3600) // 60
 
         # Countdown anzeigen
