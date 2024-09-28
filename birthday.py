@@ -150,7 +150,7 @@ with col2:
     st.write("")
     st.write("")
     if event_today:
-        st.wirte(f"🎉 Glückwunsch {event_today}!")
+        st.write(f"🎉 Glückwunsch {event_today}!")
     else:
         st.write("☁️ Für heute steht nichts an.")
 
