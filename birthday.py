@@ -46,6 +46,15 @@ def read_image_file_content(file_id):
     file_content = request.execute()
     return file_content
 
+def start_rain(emojii):
+    rain(
+        emoji=emojii,
+        font_size=54,
+        falling_speed=5,
+        animation_length="5s"
+    )
+
+
 
 st.title("Dyckhome")
 
@@ -83,9 +92,9 @@ col0, col01 = st.columns([2,1])
 with col0:
     st.write("Eine Website für die besten Eltern der Welt.")
 with col01:
-    st.button("Refresh-Button")
+    if st.button("Refresh-Button"):
+        start_rain("❤️")
 col1, colo, col2 = st.columns([2,1,2])
-
 
 #Bilder
 with col1:
@@ -119,7 +128,7 @@ with col2:
         "zu Arnes Geburtstag": datetime(2024, 11, 11), 
         "zu Jules Geburtstag": datetime(2024, 11, 19),
         "zu Gerti Geburtstag": datetime(2024, 12, 11),
-        "Weihnachten": datetime(2024, 12, 24),
+        "zu Weihnachten": datetime(2024, 12, 24),
         "zu Friederikes Geburtstag": datetime(2024, 12, 28),
         "zu Wolfgangs Geburtstag": datetime(2025, 7, 30),  
         "zu Kallis Geburtstag": datetime(2025, 9, 3),  
@@ -129,6 +138,23 @@ with col2:
 
     next_event = None
     next_event_name = ""
+    event_today = None
+
+    #Überprüfen, ob heute ein Event ist
+    for event_name, event_time in events.items():
+        if event_time.date() == now.date():
+            event_today = event_name
+            break
+
+    #Anzeigen des heutigen Events
+    st.write("")
+    st.write("")
+    if event_today:
+        st.wirte(f"🎉 Glückwunsch {event_today}!")
+    else:
+        st.write("☁️ Für heute steht nichts an.")
+
+    #Nächstes Event
     for event_name, event_time in events.items():
         if event_time > now:
             next_event = event_time
@@ -147,22 +173,22 @@ with col2:
         st.write("")
         st.write("")
         st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
         st.write("Noch... ")
 
-        coll, colm, coln =st.columns(3)
-        coll.metric(f"Tage", days, "1.2 °F")
-        colm.metric(f"Stunden", hours, "-8%")
-        coln.metric(f"Minuten", minutes, "4%")
+        day_progress = round(100 - (days / 365 * 100))  # Verbleibende Tage in % von 365
+        hour_progress = round(100 - (hours / 24 * 100))  # Verstrichene Stunden in % von 24
+        minute_progress = round(100 - (minutes / 60 * 100))  # Verstrichene Minuten in % von 60
+
+        # Anzeige in Spalten
+        coll, colm, coln = st.columns(3)
+        coll.metric("Tage", days, f"{day_progress}%")
+        colm.metric("Stunden", hours, f"{hour_progress}%")
+        coln.metric("Minuten", minutes, f"{minute_progress}%")
 
         st.write(f"bis {next_event_name}")        
         
     else:
         st.write("Keine zukünftigen Events gefunden.")
-
 
 #Rezept
 st.header("Rezeptgenerator")
@@ -184,5 +210,3 @@ if folder_id:
             st.text_area("Dateiinhalt:", content, height=300)
     else:
         st.write("Keine Textdateien im angegebenen Ordner gefunden.")
-
-
