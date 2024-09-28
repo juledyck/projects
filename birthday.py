@@ -165,7 +165,7 @@ with col2:
     if next_event:
         time_remaining = next_event - now
         days, seconds = time_remaining.days, time_remaining.seconds
-        hours = seconds // 3600
+        hours = (seconds // 3600) - 2
         minutes = (seconds % 3600) // 60
 
         # Countdown anzeigen
